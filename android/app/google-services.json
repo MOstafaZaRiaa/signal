@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "832270434706",
+    "project_id": "signal-28664",
+    "storage_bucket": "signal-28664.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832270434706:android:5b40fd981d217b0116c14b",
+        "android_client_info": {
+          "package_name": "com.example.signal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832270434706-0l9gb1olhb2ivr56bovudbqfk30gc93e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.signal",
+            "certificate_hash": "cde84961815bc7ba09afdb31545f7c677303772b"
+          }
+        },
+        {
+          "client_id": "832270434706-jj6lq2ck02n7ive828o4vilmgkk5s5tm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCI1ltSsQNbRO9z856X_-3Rp167xSwF3Qk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "832270434706-jj6lq2ck02n7ive828o4vilmgkk5s5tm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
