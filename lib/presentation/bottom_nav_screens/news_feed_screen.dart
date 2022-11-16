@@ -11,6 +11,7 @@
 //     );
 //   }
 // }
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -31,62 +32,64 @@ class NewsFeedScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = AppCubit.get(context);
-        return cubit.posts.isEmpty
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      child: Card(
-                        elevation: 10.0,
-                        margin: const EdgeInsets.all(8.0),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: Stack(
-                          alignment: AlignmentDirectional.bottomEnd,
-                          children: [
-                            const Image(
-                              image: NetworkImage(
-                                  'https://img.freepik.com/free-photo/portrait-beautiful-young-woman-gesticulating_273609-41056.jpg?w=1380&t=st=1659923961~exp=1659924561~hmac=e95d4491257198908316adf72bb4b0902d01bb4766676211007db66ddbe51136'),
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              height: 200,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Communicate With Friends',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1!
-                                    .copyWith(color: Colors.white),
-                              ),
-                            )
-                          ],
+        print('posts :${cubit.posts.length}');
+        return ConditionalBuilder(
+          condition: cubit.posts.length>0,
+          builder: (context) => SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Card(
+                    elevation: 10.0,
+                    margin: const EdgeInsets.all(8.0),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: Stack(
+                      alignment: AlignmentDirectional.bottomEnd,
+                      children: [
+                        const Image(
+                          image: NetworkImage(
+                              'https://img.freepik.com/free-photo/portrait-beautiful-young-woman-gesticulating_273609-41056.jpg?w=1380&t=st=1659923961~exp=1659924561~hmac=e95d4491257198908316adf72bb4b0902d01bb4766676211007db66ddbe51136'),
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: 200,
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Communicate With Friends',
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(color: Colors.white),
+                          ),
+                        )
+                      ],
                     ),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      separatorBuilder: (context, index) => const SizedBox(
-                        height: 10,
-                      ),
-                      itemBuilder: (context, index) =>
-                          buildPostItem(cubit.posts[index], context, index),
-                      itemCount: cubit.posts.length,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    )
-                  ],
+                  ),
                 ),
-              );
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 10,
+                  ),
+                  itemBuilder: (context, index) =>
+                      buildPostItem(cubit.posts[index], context, index),
+                  itemCount: cubit.posts.length,
+                ),
+                const SizedBox(
+                  height: 10,
+                )
+              ],
+            ),
+          ),
+          fallback: (context) => const Center(child: CircularProgressIndicator(),),
+        );
       },
     );
+
   }
 
   Widget buildPostItem(PostModel model, context, index) => Card(

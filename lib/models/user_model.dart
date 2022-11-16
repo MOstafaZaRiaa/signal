@@ -9,7 +9,7 @@ class UserModel {
   UserModel({this.uid, this.name, this.phone, this.image,this.cover,this.bio,this.email});
 
   UserModel.fromjson(Map<String, dynamic> json) {
-    uid = json['id'];
+    uid = json['uid'];
     name = json['name'];
     bio = json['bio'];
     email = json['email'];

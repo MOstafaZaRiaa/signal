@@ -7,6 +7,7 @@ import 'package:signal/models/user_model.dart';
 
 import '../../constance/strings.dart';
 import '../../helper/shared_prefrence_helper.dart';
+import '../app_cubit/app_cubit.dart';
 
 class LoginCubit extends Cubit<LoginStates> {
   LoginCubit() : super(LoginInitialState());
@@ -25,6 +26,7 @@ class LoginCubit extends Cubit<LoginStates> {
       emit(
         LoginSuccessState(),
       );
+          AppCubit()..getUserData()..getPosts()..getAllUsers();
     }).catchError((onError) {
       print('login-error : ${onError.toString()}');
       emit(

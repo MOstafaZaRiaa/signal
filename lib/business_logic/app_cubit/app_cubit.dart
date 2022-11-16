@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:signal/business_logic/app_cubit/app_states.dart';
 import 'package:signal/constance/components.dart';
 import 'package:signal/presentation/add_post_screen.dart';
+import 'package:signal/presentation/auth_screens/login_screen.dart';
 import 'package:signal/presentation/bottom_nav_screens/chats_screen.dart';
 import 'package:signal/presentation/bottom_nav_screens/news_feed_screen.dart';
 import 'package:signal/presentation/bottom_nav_screens/settings_screen.dart';
@@ -39,8 +42,8 @@ class AppCubit extends Cubit<AppStates> {
       userModel= UserModel.fromjson(value.data()!);
       emit(AppGetUserDataSuccessesState());
     }).catchError((onError) {
-      print('getUSerDataError : ${onError.toStirng()}');
-      emit(AppGetUserDataErrorState(onError.toStirng()));
+      print('getUSerDataError : ${onError.toString()}');
+      emit(AppGetUserDataErrorState(onError));
     });
   }
   //*************************************************************************
@@ -338,7 +341,8 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  void sendMessages({
+
+  void sendMessage({
     required String recieverId,
     required String text,
   }) {
@@ -353,7 +357,7 @@ class AppCubit extends Cubit<AppStates> {
         dateTime: Timestamp.now(),
         recieverId: recieverId,
         senderId: uId,
-        text: text)
+        message: text)
         .toMap())
         .then((value) {
       emit(SocialSendMessageSuccessState());
@@ -373,7 +377,7 @@ class AppCubit extends Cubit<AppStates> {
         dateTime: Timestamp.now(),
         recieverId: recieverId,
         senderId: uId,
-        text: text)
+        message: text)
         .toMap())
         .then((value) {
       emit(SocialSendMessageSuccessState());
@@ -401,5 +405,15 @@ class AppCubit extends Cubit<AppStates> {
       }
       emit(SocialGetMessagesSuccessState());
     });
+  }
+
+
+  Future<void> signOut(context) async {
+    await FirebaseAuth.instance.signOut();
+    SharedPreferenceHelper.saveData(key: 'uId', value: '');
+    uId = SharedPreferenceHelper.getData(key: 'uId');
+    currentIndex = 0;
+    navigateAndFinish(context: context,widget: LoginScreen());
+    emit(SignOutState());
   }
 }

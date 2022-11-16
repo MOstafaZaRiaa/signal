@@ -23,7 +23,7 @@ class MainScreen extends StatelessWidget {
           );
         }
         if (state is AppGetUserDataErrorState) {
-          showToast(text: state.error, color: ToastColors.ERROR);
+          showToast(text: state.error.toString(), color: ToastColors.ERROR);
         }
       },
       builder: (context, state) {

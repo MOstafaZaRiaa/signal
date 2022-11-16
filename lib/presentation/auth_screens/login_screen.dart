@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:signal/business_logic/app_cubit/app_cubit.dart';
 import 'package:signal/presentation/auth_screens/sign_up_screens.dart';
 
 import '../../../business_logic/login_cubit/login_cubit.dart';

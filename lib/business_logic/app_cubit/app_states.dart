@@ -94,3 +94,7 @@ class SocialSendMessageSuccessState extends AppStates {}
 
 class SocialSendMessageErrorState extends AppStates {}
 class SocialGetMessagesSuccessState extends AppStates {}
+
+
+
+class SignOutState extends AppStates {}
